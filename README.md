@@ -1,5 +1,5 @@
 # PCLIssueHelper
-这是一个一个帮你检查 PCL 仓库里的 Issue 是否重复的小工具。
+这是一个帮你检查 PCL 仓库里的 Issue 是否重复的小工具。
 
 ![image](https://github.com/user-attachments/assets/b3799a1c-71d7-45fb-a275-d273e03940a6)
 
