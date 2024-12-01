@@ -93,7 +93,7 @@
             buttonGetSimilarity.Name = "buttonGetSimilarity";
             buttonGetSimilarity.Size = new Size(137, 25);
             buttonGetSimilarity.TabIndex = 4;
-            buttonGetSimilarity.Text = "比对相似度";
+            buttonGetSimilarity.Text = "对比相似度";
             buttonGetSimilarity.UseVisualStyleBackColor = true;
             buttonGetSimilarity.Click += buttonGetSimilarity_Click;
             // 

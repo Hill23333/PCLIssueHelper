@@ -93,11 +93,11 @@ namespace PCLIssueHelper
             taskDialogPage.Heading = "关于 PCL Issue Helper";
             taskDialogPage.Icon = TaskDialogIcon.Information;
             taskDialogPage.Text = """
-                版本: 1.0.1
+                版本: 1.0.2
                 作者: Hill233
 
                 开放源代码许可:
-                <a href="https://github.com/feature23/StringSimilarity.NET/blob/main/LICENSE">StringSimilarity.NET</a> Copyright © 2015 feature[23]
+                <a href="https://github.com/anderscui/jieba.NET/blob/master/LICENSE">jieba.NET</a> Copyright © 2015 andersc
                 <a href="https://github.com/xoofx/markdig/blob/master/license.txt">MarkDig</a> Copyright © 2018-2019, Alexandre Mutel All rights reserved.
                 """;
 
