@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace PCLIssueHelper
@@ -14,12 +13,6 @@ namespace PCLIssueHelper
             List<Issues> issues = JsonSerializer.Deserialize<List<Issues>>(json) ?? new List<Issues>();
 
             checker = new(issues);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-
         }
 
         private void buttonGetSimilarity_Click(object sender, EventArgs e)
@@ -56,7 +49,7 @@ namespace PCLIssueHelper
 
         private void listViewBody_DoubleClick(object sender, EventArgs e)
         {
-            if (listViewTitle.SelectedItems.Count > 0)
+            if (listViewBody.SelectedItems.Count > 0)
             {
                 var selectedItem = listViewBody.SelectedItems[0];
                 string id = selectedItem.SubItems[0].Text;
@@ -97,10 +90,10 @@ namespace PCLIssueHelper
             var taskDialogPage = new TaskDialogPage();
             taskDialogPage.EnableLinks = true;
             taskDialogPage.Caption = "关于";
-            taskDialogPage.Heading = "关于 PCL Issue相似度对比器";
+            taskDialogPage.Heading = "关于 PCL Issue Helper";
             taskDialogPage.Icon = TaskDialogIcon.Information;
             taskDialogPage.Text = """
-                版本: 1.0.0
+                版本: 1.0.1
                 作者: Hill233
 
                 开放源代码许可:

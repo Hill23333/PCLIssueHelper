@@ -78,7 +78,7 @@
             KeyPreview = true;
             MaximizeBox = false;
             Name = "FormInfo";
-            Text = "Issue {$issue} 的详细信息";
+            Text = "Issue {$issue} 的详细信息 (按 Esc 退出)";
             Load += FormInfo_Load;
             KeyDown += FormInfo_KeyDown;
             ((System.ComponentModel.ISupportInitialize)webView2Markdown).EndInit();

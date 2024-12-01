@@ -51,6 +51,7 @@
             需要社区帮忙的IssueHToolStripMenuItem = new ToolStripMenuItem();
             帮助HToolStripMenuItem = new ToolStripMenuItem();
             关于AToolStripMenuItem = new ToolStripMenuItem();
+            labelHint = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -213,15 +214,25 @@
             // 关于AToolStripMenuItem
             // 
             关于AToolStripMenuItem.Name = "关于AToolStripMenuItem";
-            关于AToolStripMenuItem.Size = new Size(180, 22);
+            关于AToolStripMenuItem.Size = new Size(125, 22);
             关于AToolStripMenuItem.Text = "关于(&A)...";
             关于AToolStripMenuItem.Click += 关于AToolStripMenuItem_Click;
+            // 
+            // labelHint
+            // 
+            labelHint.AutoSize = true;
+            labelHint.Location = new Point(12, 479);
+            labelHint.Name = "labelHint";
+            labelHint.Size = new Size(262, 17);
+            labelHint.TabIndex = 8;
+            labelHint.Text = "双击列表里的项目可以查看此 Issue 的详细信息";
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 475);
+            ClientSize = new Size(800, 505);
+            Controls.Add(labelHint);
             Controls.Add(listViewBody);
             Controls.Add(listViewTitle);
             Controls.Add(buttonGetSimilarity);
@@ -234,8 +245,7 @@
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "FormMain";
-            Text = "PCL Issue相似度对比器";
-            Load += Form1_Load;
+            Text = "PCL Issue Helper";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -267,5 +277,6 @@
         private ToolStripMenuItem pCL2IssuesIToolStripMenuItem;
         private ToolStripMenuItem pCL2DiscussionsDToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
+        private Label labelHint;
     }
 }
