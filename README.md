@@ -1,4 +1,4 @@
-# PCLIssueHelper
+# PCL Issue Helper
 这是一个帮你检查 PCL 仓库里的 Issue 是否重复的小工具。
 
 ![image](https://github.com/user-attachments/assets/b3799a1c-71d7-45fb-a275-d273e03940a6)
@@ -10,7 +10,7 @@
 ### 对比重复度
 ![image](https://github.com/user-attachments/assets/35f03071-0ff3-49aa-8273-4975499b20ec)
 
-输入要对比的 Issue 的标题和内容，点击“比对相似度”，可以将相似度从大到小排序。~虽然很不准~
+输入要对比的 Issue 的标题和内容，点击“比对相似度”，可以将相似度从大到小排序。~虽然有一点不准~
 
 ### 查看 Issue 详细内容
 ![image](https://github.com/user-attachments/assets/4aa1ecc7-7d32-47ba-b8eb-90e27d45000a)
