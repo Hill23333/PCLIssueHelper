@@ -26,7 +26,7 @@ namespace PCLIssueHelper
                 .Build();
             string html = Markdown.ToHtml(_body, pipeline);
 
-            string htmlPictureFix = $@"
+            string htmlWithCss = $@"
                                        <html>
                                        <head>
                                            <style>
@@ -34,6 +34,22 @@ namespace PCLIssueHelper
                                                    max-width: 100%;
                                                    max-height: 100%;
                                                    object-fit: contain;
+                                               }}
+                                               
+                                               body {{
+                                                   background-color: white;
+                                                   color: black;
+                                               }}                                               
+
+                                               @media (prefers-color-scheme: dark) {{
+                                                   body {{
+                                                       background-color: #323232;
+                                                       color: white;
+                                                   }}
+                                        
+                                                   h1, p {{
+                                                       color: white;
+                                                   }}
                                                }}
                                            </style>
                                        </head>
@@ -45,7 +61,7 @@ namespace PCLIssueHelper
             webView2Markdown.EnsureCoreWebView2Async(null);
             webView2Markdown.CoreWebView2InitializationCompleted += (sender, e) =>
             {
-                webView2Markdown.NavigateToString(htmlPictureFix);
+                webView2Markdown.NavigateToString(htmlWithCss);
             };
         }
 

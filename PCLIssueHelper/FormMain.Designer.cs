@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             labelTitle = new Label();
             labelBody = new Label();
             textBoxTitle = new TextBox();
@@ -50,6 +51,9 @@
             可以提交PR的IssuePToolStripMenuItem = new ToolStripMenuItem();
             需要社区帮忙的IssueHToolStripMenuItem = new ToolStripMenuItem();
             帮助HToolStripMenuItem = new ToolStripMenuItem();
+            检查本体更新UToolStripMenuItem = new ToolStripMenuItem();
+            检查Issues列表更新IToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator2 = new ToolStripSeparator();
             关于AToolStripMenuItem = new ToolStripMenuItem();
             labelHint = new Label();
             menuStrip1.SuspendLayout();
@@ -145,7 +149,7 @@
             // columnHeaderDataBody
             // 
             columnHeaderDataBody.Text = "内容";
-            columnHeaderDataBody.Width = 250;
+            columnHeaderDataBody.Width = 600;
             // 
             // menuStrip1
             // 
@@ -206,15 +210,32 @@
             // 
             // 帮助HToolStripMenuItem
             // 
-            帮助HToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 关于AToolStripMenuItem });
+            帮助HToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { 检查本体更新UToolStripMenuItem, 检查Issues列表更新IToolStripMenuItem, toolStripSeparator2, 关于AToolStripMenuItem });
             帮助HToolStripMenuItem.Name = "帮助HToolStripMenuItem";
             帮助HToolStripMenuItem.Size = new Size(61, 21);
             帮助HToolStripMenuItem.Text = "帮助(&H)";
             // 
+            // 检查本体更新UToolStripMenuItem
+            // 
+            检查本体更新UToolStripMenuItem.Name = "检查本体更新UToolStripMenuItem";
+            检查本体更新UToolStripMenuItem.Size = new Size(207, 22);
+            检查本体更新UToolStripMenuItem.Text = "检查本体更新(&U)...";
+            // 
+            // 检查Issues列表更新IToolStripMenuItem
+            // 
+            检查Issues列表更新IToolStripMenuItem.Name = "检查Issues列表更新IToolStripMenuItem";
+            检查Issues列表更新IToolStripMenuItem.Size = new Size(207, 22);
+            检查Issues列表更新IToolStripMenuItem.Text = "检查 Issue 列表更新(&I)...";
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(204, 6);
+            // 
             // 关于AToolStripMenuItem
             // 
             关于AToolStripMenuItem.Name = "关于AToolStripMenuItem";
-            关于AToolStripMenuItem.Size = new Size(125, 22);
+            关于AToolStripMenuItem.Size = new Size(207, 22);
             关于AToolStripMenuItem.Text = "关于(&A)...";
             关于AToolStripMenuItem.Click += 关于AToolStripMenuItem_Click;
             // 
@@ -242,6 +263,7 @@
             Controls.Add(labelTitle);
             Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "FormMain";
@@ -278,5 +300,8 @@
         private ToolStripMenuItem pCL2DiscussionsDToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
         private Label labelHint;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem 检查本体更新UToolStripMenuItem;
+        private ToolStripMenuItem 检查Issues列表更新IToolStripMenuItem;
     }
 }
