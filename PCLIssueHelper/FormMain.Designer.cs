@@ -93,6 +93,7 @@
             textBoxBody.Margin = new Padding(5, 4, 5, 4);
             textBoxBody.Multiline = true;
             textBoxBody.Name = "textBoxBody";
+            textBoxBody.ScrollBars = ScrollBars.Vertical;
             textBoxBody.Size = new Size(1262, 104);
             textBoxBody.TabIndex = 3;
             // 
