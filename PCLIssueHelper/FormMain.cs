@@ -103,10 +103,23 @@ namespace PCLIssueHelper
 
             taskDialogPage.LinkClicked += (sender, e) =>
             {
-                Process.Start(new ProcessStartInfo(e.LinkHref) {UseShellExecute = true });
+                Process.Start(new ProcessStartInfo(e.LinkHref) { UseShellExecute = true });
             };
 
             TaskDialog.ShowDialog(taskDialogPage);
+        }
+
+        private void button_OnlineIssue_Click(object sender, EventArgs e)
+        {
+            string input = textBox_OnlineIssue.Text.Trim();
+            int temp;
+            if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input,out temp))
+            {
+                return;
+            }
+            Issues thisIssue = Issue.Online.GetIssue(temp);
+            textBoxTitle.Text = thisIssue.title;
+            textBoxBody.Text = thisIssue.body;
         }
     }
 }

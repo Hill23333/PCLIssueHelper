@@ -56,7 +56,7 @@ namespace PCLIssueHelper
             return (result1, result2);
         }
 
-        private static string BodyReplace(string body)
+        public static string BodyReplace(string body)
         {
             return body
                     .Replace("""我已在 [Issues 页面](https://github.com/Hex-Dragon/PCL2/issues?q=is%3Aissue+) 和 [常见&难检反馈及问题列表](https://github.com/Hex-Dragon/PCL2/discussions/1930) 中搜索，确认了这一建议未被提交过。""", "")
