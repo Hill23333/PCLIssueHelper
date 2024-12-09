@@ -133,7 +133,7 @@ namespace PCLIssueHelper
             }
             Issue.Issue thisIssue = Issue.Online.GetIssue(temp);
             textBoxTitle.Text = thisIssue.title;
-            textBoxBody.Text = thisIssue.body;
+            textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
         }
     }
 }
