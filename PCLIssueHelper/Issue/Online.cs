@@ -33,7 +33,7 @@ namespace PCLIssueHelper.Issue
             return res.Result;
         }
 
-        public static Issues GetIssue(int issueNumber)
+        public static Issue GetIssue(int issueNumber)
         {
             try
             {
@@ -42,12 +42,7 @@ namespace PCLIssueHelper.Issue
                 {
                     Task<string> content = httpres.Content.ReadAsStringAsync();
                     content.Wait();
-                    JObject jres = JObject.Parse(content.Result);
-                    Issues ires = new();
-                    ires.title = jres["title"].ToString();
-                    ires.number = issueNumber;
-                    ires.body = IssueSimilarityChecker.BodyReplace(jres["body"].ToString());
-                    ires.id = long.Parse(jres["id"].ToString());
+                    Issue ires = Issue.GetFromJson(content.Result);
                     return ires;
                 }
         }

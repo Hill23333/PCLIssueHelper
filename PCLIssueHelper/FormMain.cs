@@ -1,3 +1,4 @@
+using PCLIssueHelper.Issue;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -6,12 +7,12 @@ namespace PCLIssueHelper
     public partial class FormMain : Form
     {
         public IssueSimilarityChecker checker;
-        private List<Issue> _issues;
+        private List<Issue.Issue> _issues;
         public FormMain()
         {
             InitializeComponent();
             string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\issues.json");
-            _issues = JsonSerializer.Deserialize<List<Issue>>(json) ?? new List<Issue>();
+            _issues = JsonSerializer.Deserialize<List<Issue.Issue>>(json) ?? new List<Issue.Issue>();
 
             checker = new(_issues);
         }
@@ -130,7 +131,7 @@ namespace PCLIssueHelper
             {
                 return;
             }
-            Issues thisIssue = Issue.Online.GetIssue(temp);
+            Issue.Issue thisIssue = Issue.Online.GetIssue(temp);
             textBoxTitle.Text = thisIssue.title;
             textBoxBody.Text = thisIssue.body;
         }

@@ -17,10 +17,4 @@ namespace PCLIssueHelper
             Application.Run(new FormMain());
         }
     }
-    public class Issue
-    {
-        public long number { get; set; }
-        public string title { get; set; } = null!;
-        public string body { get; set; } = string.Empty;
-    }
 }
