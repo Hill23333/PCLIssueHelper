@@ -1,14 +1,15 @@
 ﻿using System.Collections.Concurrent;
 using JiebaNet.Segmenter;
 using PCLIssueHelper.Similaries;
+using PCLIssueHelper.Issue;
 
 namespace PCLIssueHelper
 {
     public class IssueSimilarityChecker
     {
-        public List<Issue> _issues;
+        public List<Issue.Issue> _issues;
 
-        public IssueSimilarityChecker(List<Issue> issues)
+        public IssueSimilarityChecker(List<Issue.Issue> issues)
         { 
             _issues = issues;
         }
