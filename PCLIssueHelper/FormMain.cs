@@ -6,32 +6,45 @@ namespace PCLIssueHelper
     public partial class FormMain : Form
     {
         public IssueSimilarityChecker checker;
+        private List<Issue> _issues;
         public FormMain()
         {
             InitializeComponent();
             string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\issues.json");
-            List<Issues> issues = JsonSerializer.Deserialize<List<Issues>>(json) ?? new List<Issues>();
+            _issues = JsonSerializer.Deserialize<List<Issue>>(json) ?? new List<Issue>();
 
-            checker = new(issues);
+            checker = new(_issues);
         }
-
-        private void buttonGetSimilarity_Click(object sender, EventArgs e)
+        private async void buttonGetSimilarity_Click(object sender, EventArgs e)
         {
+            buttonGetSimilarity.Enabled = false;
+            
             listViewTitle.Items.Clear();
             listViewBody.Items.Clear();
+            
             var title = textBoxTitle.Text;
             var body = textBoxBody.Text;
-            var similarity = checker.CheckSimilarity(textBoxTitle.Text, textBoxBody.Text);
+            
+            var similarity = await checker.CheckSimilarityAsync(textBoxTitle.Text, textBoxBody.Text);
+            
             var similarityTitles = similarity.Item1;
             var similarityBodies = similarity.Item2;
+            
+            listViewTitle.BeginUpdate();
             foreach (var _title in similarityTitles)
             {
-                listViewTitle.Items.Add(new ListViewItem(new string[] { _title.Key, _title.Value.ToString(), checker._issues.Where(x => x.number.ToString() == _title.Key).Select(x => x.title).FirstOrDefault() ?? "" }));
+                listViewTitle.Items.Add(new ListViewItem(new string[] { _title.Key, _title.Value.ToString(), _issues.Where(x => x.number.ToString() == _title.Key).Select(x => x.title).FirstOrDefault() ?? "" }));
             }
+            listViewTitle.EndUpdate();
+            
+            listViewBody.BeginUpdate();
             foreach (var _body in similarityBodies)
             {
-                listViewBody.Items.Add(new ListViewItem(new string[] { _body.Key, _body.Value.ToString(), checker._issues.Where(x => x.number.ToString() == _body.Key).Select(x => x.body).FirstOrDefault() ?? "" }));
+                listViewBody.Items.Add(new ListViewItem(new string[] { _body.Key, _body.Value.ToString(), Utils.BodyReplace(_issues.Where(x => x.number.ToString() == _body.Key).Select(x => x.body).FirstOrDefault() ?? "") }));
             }
+            listViewBody.EndUpdate();
+            
+            buttonGetSimilarity.Enabled = true;
         }
 
         private void listViewTitle_DoubleClick(object sender, EventArgs e)
@@ -54,7 +67,7 @@ namespace PCLIssueHelper
                 var selectedItem = listViewBody.SelectedItems[0];
                 string id = selectedItem.SubItems[0].Text;
                 string title = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.title).FirstOrDefault() ?? "";
-                string body = selectedItem.SubItems[2].Text;
+                string body = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.body).FirstOrDefault() ?? "";
                 FormInfo formInfo = new(id, title, body);
                 formInfo.ShowDialog();
             }
@@ -93,7 +106,7 @@ namespace PCLIssueHelper
             taskDialogPage.Heading = "关于 PCL Issue Helper";
             taskDialogPage.Icon = TaskDialogIcon.Information;
             taskDialogPage.Text = """
-                版本: 1.0.2
+                版本: 1.1.0
                 作者: Hill233
 
                 开放源代码许可:

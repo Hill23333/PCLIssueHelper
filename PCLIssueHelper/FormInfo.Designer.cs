@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormInfo));
             buttonGithub = new Button();
             webView2Markdown = new Microsoft.Web.WebView2.WinForms.WebView2();
             labelTitle = new Label();
@@ -75,6 +76,7 @@
             Controls.Add(webView2Markdown);
             Controls.Add(buttonGithub);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             MaximizeBox = false;
             Name = "FormInfo";
