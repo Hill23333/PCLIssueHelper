@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 
-namespace PCLIssueHelper.Issue
+namespace PCLIssueHelper.Issues
 {
     internal class Online
     {
         public const string GITHUB_API = "https://api.github.com/repos/Hex-Dragon/PCL2/";
 
-        private static HttpResponseMessage GetRequest(string path)
+        private static async Task<HttpResponseMessage> GetRequestAsync(string path)
         {
             HttpClient client = new();
 
@@ -20,23 +20,22 @@ namespace PCLIssueHelper.Issue
             HttpRequestMessage httpRequest = new();
             httpRequest.RequestUri = new Uri($"{GITHUB_API}{path}");
             httpRequest.Method = HttpMethod.Get;
-            httpRequest.Headers.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0");
+            httpRequest.Headers.UserAgent.ParseAdd($"PCLIssueHelper/{Application.ProductVersion}");
 
             // 等待返回结果
-            Task<HttpResponseMessage> res = client.SendAsync(httpRequest);
-            res.Wait();
-            if (res.Result.StatusCode != HttpStatusCode.OK)
+            var res = await client.SendAsync(httpRequest);
+            if (res.StatusCode != HttpStatusCode.OK)
             {
-                throw new HttpRequestException(res.Result.StatusCode.ToString());
+                throw new HttpRequestException(res.StatusCode.ToString());
             }
-            return res.Result;
+            return res;
         }
 
-        public static Issue GetIssue(int issueNumber)
+        public static async Task<Issue> GetIssueAsync(int issueNumber)
         {
             try
             {
-                var httpres = GetRequest($"issues/{issueNumber.ToString()}");
+                var httpres = await GetRequestAsync($"issues/{issueNumber.ToString()}");
                 if (httpres.StatusCode == HttpStatusCode.OK)
                 {
                     Task<string> content = httpres.Content.ReadAsStringAsync();

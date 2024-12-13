@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 
-namespace PCLIssueHelper.Issue
+namespace PCLIssueHelper.Issues
 {
     public class Issue
     {

@@ -1,4 +1,4 @@
-using PCLIssueHelper.Issue;
+using PCLIssueHelper.Issues;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -7,12 +7,12 @@ namespace PCLIssueHelper
     public partial class FormMain : Form
     {
         public IssueSimilarityChecker checker;
-        private List<Issue.Issue> _issues;
+        private List<Issue> _issues;
         public FormMain()
         {
             InitializeComponent();
             string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\issues.json");
-            _issues = JsonSerializer.Deserialize<List<Issue.Issue>>(json) ?? new List<Issue.Issue>();
+            _issues = JsonSerializer.Deserialize<List<Issue>>(json) ?? new List<Issue>();
 
             checker = new(_issues);
         }
@@ -107,13 +107,15 @@ namespace PCLIssueHelper
             taskDialogPage.Heading = "关于 PCL Issue Helper";
             taskDialogPage.Icon = TaskDialogIcon.Information;
             taskDialogPage.Text = """
-                版本: 1.1.0
+                版本: ${ver}
                 作者: Hill233
 
+                PCL Issue Helper 的诞生离不开 PCL-Community 的其他成员和社区的帮助！
+                
                 开放源代码许可:
                 <a href="https://github.com/anderscui/jieba.NET/blob/master/LICENSE">jieba.NET</a> Copyright © 2015 andersc
                 <a href="https://github.com/xoofx/markdig/blob/master/license.txt">MarkDig</a> Copyright © 2018-2019, Alexandre Mutel All rights reserved.
-                """;
+                """.Replace("${ver}", Application.ProductVersion);
 
             taskDialogPage.LinkClicked += (sender, e) =>
             {
@@ -123,7 +125,7 @@ namespace PCLIssueHelper
             TaskDialog.ShowDialog(taskDialogPage);
         }
 
-        private void button_OnlineIssue_Click(object sender, EventArgs e)
+        private async void button_OnlineIssue_Click(object sender, EventArgs e)
         {
             string input = textBox_OnlineIssue.Text.Trim();
             int temp;
@@ -131,7 +133,7 @@ namespace PCLIssueHelper
             {
                 return;
             }
-            Issue.Issue thisIssue = Issue.Online.GetIssue(temp);
+            Issue thisIssue = await Online.GetIssueAsync(temp);
             textBoxTitle.Text = thisIssue.title;
             textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
         }

@@ -1,16 +1,15 @@
 ﻿using System.Collections.Concurrent;
 using JiebaNet.Segmenter;
 using PCLIssueHelper.Similaries;
-using PCLIssueHelper.Issue;
 
-namespace PCLIssueHelper
+namespace PCLIssueHelper.Issues
 {
     public class IssueSimilarityChecker
     {
-        public List<Issue.Issue> _issues;
+        public List<Issue> _issues;
 
-        public IssueSimilarityChecker(List<Issue.Issue> issues)
-        { 
+        public IssueSimilarityChecker(List<Issue> issues)
+        {
             _issues = issues;
         }
 
@@ -28,7 +27,7 @@ namespace PCLIssueHelper
             await Parallel.ForEachAsync(_issues, async (issue, cancellationToken) =>
             {
                 await Task.Yield();
-                
+
                 var _body = issue.body ?? "";
                 _body = Utils.BodyReplace(_body);
 
