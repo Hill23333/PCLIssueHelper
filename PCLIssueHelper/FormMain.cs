@@ -1,5 +1,6 @@
 using PCLIssueHelper.Issues;
 using System.Diagnostics;
+using System.Media;
 using System.Text.Json;
 
 namespace PCLIssueHelper
@@ -15,10 +16,18 @@ namespace PCLIssueHelper
             _issues = JsonSerializer.Deserialize<List<Issue>>(json) ?? new List<Issue>();
 
             checker = new(_issues);
+
+            toolStripStatusLabel3.Text = (toolStripStatusLabel3.Text ?? "").Replace("${issue}", _issues.Count.ToString());
+            toolStripStatusLabel1.Text = "";
+
+            Updater.CheckUpdates(false);
         }
         private async void buttonGetSimilarity_Click(object sender, EventArgs e)
         {
             buttonGetSimilarity.Enabled = false;
+            button_OnlineIssue.Enabled = false;
+
+            toolStripStatusLabel1.Text = "正在对比 Issue 相似度...";
 
             listViewTitle.Items.Clear();
             listViewBody.Items.Clear();
@@ -45,7 +54,12 @@ namespace PCLIssueHelper
             }
             listViewBody.EndUpdate();
 
+            toolStripStatusLabel1.Text = "";
+
+            SystemSounds.Exclamation.Play();
+
             buttonGetSimilarity.Enabled = true;
+            button_OnlineIssue.Enabled = true;
         }
 
         private void listViewTitle_DoubleClick(object sender, EventArgs e)
@@ -127,6 +141,11 @@ namespace PCLIssueHelper
 
         private async void button_OnlineIssue_Click(object sender, EventArgs e)
         {
+            button_OnlineIssue.Enabled = false;
+            buttonGetSimilarity.Enabled = false;
+
+            toolStripStatusLabel1.Text = "正在在线获取 Issue 内容...";
+
             string input = textBox_OnlineIssue.Text.Trim();
             int temp;
             if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out temp))
@@ -136,11 +155,33 @@ namespace PCLIssueHelper
             Issue thisIssue = await Online.GetIssueAsync(temp);
             textBoxTitle.Text = thisIssue.title;
             textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
+
+            toolStripStatusLabel1.Text = "";
+
+            SystemSounds.Exclamation.Play();
+
+            button_OnlineIssue.Enabled = true;
+            buttonGetSimilarity.Enabled = true;
         }
 
         private void 检查本体更新UToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Updater.CheckUpdates();
         }
+        private void 检查Issues列表更新IToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Updater.CheckIssueUpdates();
+            string json = File.ReadAllText(Directory.GetCurrentDirectory() + "\\issues.json");
+            _issues = JsonSerializer.Deserialize<List<Issue>>(json) ?? new List<Issue>();
+
+        }
+        public void UpdateStatusStrip1(string status)
+        {
+            this.Invoke(() =>
+            {
+                toolStripStatusLabel1.Text = status;
+            });
+        }
+        
     }
 }

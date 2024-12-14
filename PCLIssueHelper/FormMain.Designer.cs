@@ -60,7 +60,11 @@
             label_OnlineIssue = new Label();
             button_OnlineIssue = new Button();
             statusStrip1 = new StatusStrip();
+            toolStripStatusLabel1 = new ToolStripStatusLabel();
+            toolStripStatusLabel2 = new ToolStripStatusLabel();
+            toolStripStatusLabel3 = new ToolStripStatusLabel();
             menuStrip1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // labelTitle
@@ -235,6 +239,7 @@
             检查Issues列表更新IToolStripMenuItem.Name = "检查Issues列表更新IToolStripMenuItem";
             检查Issues列表更新IToolStripMenuItem.Size = new Size(207, 22);
             检查Issues列表更新IToolStripMenuItem.Text = "检查 Issue 列表更新(&I)...";
+            检查Issues列表更新IToolStripMenuItem.Click += 检查Issues列表更新IToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
@@ -289,11 +294,31 @@
             // 
             // statusStrip1
             // 
+            statusStrip1.BackColor = SystemColors.Control;
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, toolStripStatusLabel3 });
             statusStrip1.Location = new Point(0, 587);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(867, 22);
             statusStrip1.TabIndex = 12;
             statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new Size(44, 17);
+            toolStripStatusLabel1.Text = "${text}";
+            // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new Size(666, 17);
+            toolStripStatusLabel2.Spring = true;
+            // 
+            // toolStripStatusLabel3
+            // 
+            toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            toolStripStatusLabel3.Size = new Size(142, 17);
+            toolStripStatusLabel3.Text = "已载入 ${issue} 个 Issue";
             // 
             // FormMain
             // 
@@ -322,6 +347,8 @@
             Text = "PCL Issue Helper";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -359,5 +386,8 @@
         private ToolStripMenuItem 检查本体更新UToolStripMenuItem;
         private ToolStripMenuItem 检查Issues列表更新IToolStripMenuItem;
         private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
+        private ToolStripStatusLabel toolStripStatusLabel3;
     }
 }
