@@ -8,7 +8,7 @@ using System.Net.Http;
 
 namespace PCLIssueHelper.Issues
 {
-    internal class Online
+    public class Online
     {
         public const string GITHUB_API = "https://api.github.com/repos/Hex-Dragon/PCL2/";
 
@@ -38,9 +38,8 @@ namespace PCLIssueHelper.Issues
                 var httpres = await GetRequestAsync($"issues/{issueNumber.ToString()}");
                 if (httpres.StatusCode == HttpStatusCode.OK)
                 {
-                    Task<string> content = httpres.Content.ReadAsStringAsync();
-                    content.Wait();
-                    Issue ires = Issue.GetFromJson(content.Result);
+                    string content = await httpres.Content.ReadAsStringAsync();
+                    Issue ires = Issue.GetFromJson(content);
                     return ires;
                 }
         }

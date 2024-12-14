@@ -59,6 +59,7 @@
             textBox_OnlineIssue = new TextBox();
             label_OnlineIssue = new Label();
             button_OnlineIssue = new Button();
+            statusStrip1 = new StatusStrip();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -164,7 +165,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { 快速链接LToolStripMenuItem, 帮助HToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(862, 25);
+            menuStrip1.Size = new Size(867, 25);
             menuStrip1.TabIndex = 7;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -227,6 +228,7 @@
             检查本体更新UToolStripMenuItem.Name = "检查本体更新UToolStripMenuItem";
             检查本体更新UToolStripMenuItem.Size = new Size(207, 22);
             检查本体更新UToolStripMenuItem.Text = "检查本体更新(&U)...";
+            检查本体更新UToolStripMenuItem.Click += 检查本体更新UToolStripMenuItem_Click;
             // 
             // 检查Issues列表更新IToolStripMenuItem
             // 
@@ -285,11 +287,20 @@
             button_OnlineIssue.UseVisualStyleBackColor = true;
             button_OnlineIssue.Click += button_OnlineIssue_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Location = new Point(0, 587);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(867, 22);
+            statusStrip1.TabIndex = 12;
+            statusStrip1.Text = "statusStrip1";
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(862, 583);
+            ClientSize = new Size(867, 609);
+            Controls.Add(statusStrip1);
             Controls.Add(button_OnlineIssue);
             Controls.Add(label_OnlineIssue);
             Controls.Add(textBox_OnlineIssue);
@@ -347,5 +358,6 @@
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem 检查本体更新UToolStripMenuItem;
         private ToolStripMenuItem 检查Issues列表更新IToolStripMenuItem;
+        private StatusStrip statusStrip1;
     }
 }

@@ -19,32 +19,32 @@ namespace PCLIssueHelper
         private async void buttonGetSimilarity_Click(object sender, EventArgs e)
         {
             buttonGetSimilarity.Enabled = false;
-            
+
             listViewTitle.Items.Clear();
             listViewBody.Items.Clear();
-            
+
             var title = textBoxTitle.Text;
             var body = textBoxBody.Text;
-            
+
             var similarity = await checker.CheckSimilarityAsync(textBoxTitle.Text, textBoxBody.Text);
-            
+
             var similarityTitles = similarity.Item1;
             var similarityBodies = similarity.Item2;
-            
+
             listViewTitle.BeginUpdate();
             foreach (var _title in similarityTitles)
             {
                 listViewTitle.Items.Add(new ListViewItem(new string[] { _title.Key, _title.Value.ToString(), _issues.Where(x => x.number.ToString() == _title.Key).Select(x => x.title).FirstOrDefault() ?? "" }));
             }
             listViewTitle.EndUpdate();
-            
+
             listViewBody.BeginUpdate();
             foreach (var _body in similarityBodies)
             {
                 listViewBody.Items.Add(new ListViewItem(new string[] { _body.Key, _body.Value.ToString(), Utils.BodyReplace(_issues.Where(x => x.number.ToString() == _body.Key).Select(x => x.body).FirstOrDefault() ?? "") }));
             }
             listViewBody.EndUpdate();
-            
+
             buttonGetSimilarity.Enabled = true;
         }
 
@@ -129,13 +129,18 @@ namespace PCLIssueHelper
         {
             string input = textBox_OnlineIssue.Text.Trim();
             int temp;
-            if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input,out temp))
+            if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out temp))
             {
                 return;
             }
             Issue thisIssue = await Online.GetIssueAsync(temp);
             textBoxTitle.Text = thisIssue.title;
             textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
+        }
+
+        private void 检查本体更新UToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Updater.CheckUpdates();
         }
     }
 }
