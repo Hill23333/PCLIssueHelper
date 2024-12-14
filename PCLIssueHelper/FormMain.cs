@@ -19,8 +19,11 @@ namespace PCLIssueHelper
 
             toolStripStatusLabel3.Text = (toolStripStatusLabel3.Text ?? "").Replace("${issue}", _issues.Count.ToString());
             toolStripStatusLabel1.Text = "";
-
+#if DEBUG
+#else
             Updater.CheckUpdates(false);
+#endif
+
         }
         private async void buttonGetSimilarity_Click(object sender, EventArgs e)
         {
