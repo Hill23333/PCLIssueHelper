@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Media;
 using System.Security.Cryptography;
-using System.Text;
-using System.Text.Encodings;
 using System.Text.Json;
-using System.Text.Unicode;
-using System.Threading.Tasks;
+
 
 namespace PCLIssueHelper
 {
