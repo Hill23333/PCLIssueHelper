@@ -150,16 +150,18 @@ namespace PCLIssueHelper
             toolStripStatusLabel1.Text = "正在在线获取 Issue 内容...";
 
             string input = textBox_OnlineIssue.Text.Trim();
-            int temp;
+            int temp = -1;
             if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out temp))
             {
-                return;
+                toolStripStatusLabel1.Text = "输入内容不符合要求！";
             }
-            Issue thisIssue = await Online.GetIssueAsync(temp);
-            textBoxTitle.Text = thisIssue.title;
-            textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
-
-            toolStripStatusLabel1.Text = "";
+            else
+            {
+                Issue thisIssue = await Online.GetIssueAsync(temp);
+                textBoxTitle.Text = thisIssue.title;
+                textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
+                toolStripStatusLabel1.Text = "";
+            }
 
             SystemSounds.Exclamation.Play();
 
