@@ -150,7 +150,7 @@ namespace PCLIssueHelper
             toolStripStatusLabel1.Text = "正在在线获取 Issue 内容...";
 
             string input = textBox_OnlineIssue.Text.Trim();
-            int temp=-1;
+            int temp = -1;
             if (string.IsNullOrWhiteSpace(input) || !int.TryParse(input, out temp))
             {
                 toolStripStatusLabel1.Text = "输入内容不符合要求！";
