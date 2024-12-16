@@ -239,7 +239,7 @@ namespace PCLIssueHelper
                                            {html}
                                        </body>
                                        </html>";
-            if(webView2Markdown.CoreWebView2 != null)
+            if(webView2Markdown.CoreWebView2 is not null)
             {
                 webView2Markdown.CoreWebView2.NavigateToString(htmlWithCss);
                 return;
