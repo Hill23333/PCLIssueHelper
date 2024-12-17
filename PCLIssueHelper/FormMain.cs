@@ -140,11 +140,11 @@ namespace PCLIssueHelper
                 textBoxTitle.Text = thisIssue.title;
                 textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
                 toolStripStatusLabel1.Text = "";
+                setWebview(thisIssue.number.ToString(), thisIssue.title, thisIssue.body);
             }
 
             SystemSounds.Exclamation.Play();
 
-            setWebview(thisIssue.number.ToString(), thisIssue.title, thisIssue.body);
 
             button_OnlineIssue.Enabled = true;
             buttonGetSimilarity.Enabled = true;
