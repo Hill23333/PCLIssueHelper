@@ -1,12 +1,17 @@
+using Markdig;
 using PCLIssueHelper.Issues;
 using System.Diagnostics;
 using System.Media;
+using System.Security.Cryptography;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace PCLIssueHelper
 {
     public partial class FormMain : Form
     {
+        #region 查重逻辑
+
         public IssueSimilarityChecker checker;
         private List<Issue> _issues;
         public FormMain()
@@ -63,32 +68,6 @@ namespace PCLIssueHelper
 
             buttonGetSimilarity.Enabled = true;
             button_OnlineIssue.Enabled = true;
-        }
-
-        private void listViewTitle_DoubleClick(object sender, EventArgs e)
-        {
-            if (listViewTitle.SelectedItems.Count > 0)
-            {
-                var selectedItem = listViewTitle.SelectedItems[0];
-                string id = selectedItem.SubItems[0].Text;
-                string title = selectedItem.SubItems[2].Text;
-                string body = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.body).FirstOrDefault() ?? "";
-                FormInfo formInfo = new(id, title, body);
-                formInfo.ShowDialog();
-            }
-        }
-
-        private void listViewBody_DoubleClick(object sender, EventArgs e)
-        {
-            if (listViewBody.SelectedItems.Count > 0)
-            {
-                var selectedItem = listViewBody.SelectedItems[0];
-                string id = selectedItem.SubItems[0].Text;
-                string title = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.title).FirstOrDefault() ?? "";
-                string body = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.body).FirstOrDefault() ?? "";
-                FormInfo formInfo = new(id, title, body);
-                formInfo.ShowDialog();
-            }
         }
 
         private void pCL2开源仓库RToolStripMenuItem_Click(object sender, EventArgs e)
@@ -161,9 +140,11 @@ namespace PCLIssueHelper
                 textBoxTitle.Text = thisIssue.title;
                 textBoxBody.Text = Utils.BodyReplace(thisIssue.body);
                 toolStripStatusLabel1.Text = "";
+                setWebview(thisIssue.number.ToString(), thisIssue.title, thisIssue.body);
             }
 
             SystemSounds.Exclamation.Play();
+
 
             button_OnlineIssue.Enabled = true;
             buttonGetSimilarity.Enabled = true;
@@ -187,6 +168,112 @@ namespace PCLIssueHelper
                 toolStripStatusLabel1.Text = status;
             });
         }
-        
+
+        #endregion
+
+        #region 展示逻辑
+
+        private void listViewTitle_Click(object sender, EventArgs e)
+        {
+            if (listViewTitle.SelectedItems.Count > 0)
+            {
+                var selectedItem = listViewTitle.SelectedItems[0];
+                string id = selectedItem.SubItems[0].Text;
+                string title = selectedItem.SubItems[2].Text;
+                string body = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.body).FirstOrDefault() ?? "";
+                setWebview(id, title, body);
+            }
+        }
+
+        private void listViewBody_Click(object sender, EventArgs e)
+        {
+            if (listViewBody.SelectedItems.Count > 0)
+            {
+                var selectedItem = listViewBody.SelectedItems[0];
+                string id = selectedItem.SubItems[0].Text;
+                string title = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.title).FirstOrDefault() ?? "";
+                string body = checker._issues.Where(x => x.number.ToString() == id).Select(x => x.body).FirstOrDefault() ?? "";
+                setWebview(id, title, body);
+            }
+        }
+
+        private void setWebview(string id, string title, string body)
+        {
+            labelCurrentIssueTitle.Text = title;
+            toolTip.SetToolTip(labelCurrentIssueTitle,title);
+
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .Build();
+
+            labelCurrentIssueTitle.Cursor = Cursors.Hand;
+            labelCurrentIssueTitle.Tag = id;
+            string html = Markdown.ToHtml(body, pipeline);
+
+            string htmlWithCss = $@"
+                                       <html>
+                                       <head>
+                                           <style>
+                                               img {{
+                                                   max-width: 100%;
+                                                   max-height: 100%;
+                                                   object-fit: contain;
+                                               }}
+                                               
+                                               body {{
+                                                   background-color: white;
+                                                   color: black;
+                                               }}                                               
+
+                                               @media (prefers-color-scheme: dark) {{
+                                                   body {{
+                                                       background-color: #323232;
+                                                       color: white;
+                                                   }}
+                                        
+                                                   h1, p {{
+                                                       color: white;
+                                                   }}
+                                               }}
+                                           </style>
+                                       </head>
+                                       <body>
+                                           {html}
+                                       </body>
+                                       </html>";
+            if(webView2Markdown.CoreWebView2 is not null)
+            {
+                webView2Markdown.CoreWebView2.NavigateToString(htmlWithCss);
+                return;
+            }
+            webView2Markdown.EnsureCoreWebView2Async();
+            webView2Markdown.CoreWebView2InitializationCompleted += (sender, e) =>
+            {
+                webView2Markdown.NavigateToString(htmlWithCss);
+            };
+        }
+
+        private void labelCurrentIssueTitle_Click(object sender, EventArgs e)
+        {
+            if (labelCurrentIssueTitle.Tag is null || string.IsNullOrEmpty(labelCurrentIssueTitle.Tag.ToString()))
+            {
+                return;
+            }
+            string id = labelCurrentIssueTitle.Tag.ToString();
+            Process.Start(new ProcessStartInfo($"https://github.com/Hex-Dragon/PCL2/issues/{id}") { UseShellExecute = true });
+        }
+
+        private void webView2Markdown_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
+        {
+            var url = e.Uri;
+            if (url.StartsWith("http") || url.StartsWith("https"))
+            {
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+                e.Cancel = true;
+            }
+        }
+
+        #endregion
+
     }
 }

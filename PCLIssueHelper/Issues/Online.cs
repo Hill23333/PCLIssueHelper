@@ -39,7 +39,7 @@ namespace PCLIssueHelper.Issues
         }
             catch (Exception ex)
             {
-                MessageBox.Show($"获取信息失败：\n{ex.Message}");
+                MessageBox.Show($"{ex.Message}", "获取信息失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return new ();
         }
